@@ -93,6 +93,7 @@ flowchart TB
         INV[inventario<br/>sin sesión asignada aún]
         COM[compras<br/>delimitado, no obligatorio]
         SEG[seguridad<br/>S10, ya en U2]
+        CLI[clientes<br/>sin sesión asignada aún]
     end
 
     APP --> CAT
@@ -104,7 +105,7 @@ flowchart TB
     APP -. se agregan cuando su sesión les da contenido .-> FUT
 ```
 
-Al cierre de U1 (S6) solo existen `catalogo` y `ventas` como paquetes reales — `inventario`, `compras` y `seguridad` se dibujan como módulos futuros para no adelantar alcance de sesiones que todavía no llegaron (mismo criterio que [ADR-001](../../lp2/adr/ADR-001-arquitectura-backend.md)).
+Al cierre de U1 (S6) solo existen `catalogo` y `ventas` como paquetes reales — `inventario`, `compras`, `seguridad` y `clientes` se dibujan como módulos futuros para no adelantar alcance de sesiones que todavía no llegaron (mismo criterio que [ADR-001](../../lp2/adr/ADR-001-arquitectura-backend.md)). `clientes` se agregó aquí recién en S13, al auditar esta vista contra el modelo de dominio de U2: `Cliente` (con herencia `ClientePersonaNatural`/`ClienteEmpresa`) ya existe desde S6-S7 sin que esta vista lo hubiera declarado, ni siquiera como módulo futuro — la misma inconsistencia que S13 (2.3) documenta y resuelve.
 
 Reglas de la vista:
 
@@ -175,7 +176,7 @@ Decisiones adicionales, previstas pero **aún no formalizadas** como ADR de cód
 | 5. Mantiene coherencia con los requerimientos del negocio | 16% | CE021-N2 (parcial) | La arquitectura resuelve el dominio (sección 1) y la trazabilidad (sección 8) es verificable en vivo. | La arquitectura resuelve el dominio; la trazabilidad es mayormente verificable. | Coherencia parcial con el dominio o trazabilidad débil. | No hay coherencia demostrable con el dominio. | |
 | 6. Sustentación | 20% | CG | Sustenta con claridad y profesionalismo su aporte individual, respondiendo con precisión las preguntas del jurado. | Sustenta con solvencia, con detalles menores en claridad, orden o precisión. | Sustenta con dificultad; claridad, orden o precisión insuficientes. | No sustenta adecuadamente ni demuestra su aporte individual. | |
 
-Nota final = suma de (`Peso` × `Puntos de la calificación obtenida`) / 100 × 20.
+Nota final = suma de (`Peso` / 100 × `Puntos de la calificación obtenida`) = ____ / 20.
 
 `CE021-N2 (parcial)` = porción de arquitectura del Nivel 2 de CE021 (Ingeniería de Requerimientos) — la otra porción (diseño detallado) se completa en Unidad 2 de ADS. `CG` = Competencia General "Servicio y misión" del sílabo de ADS — no es CE021: los criterios 1-5 ya son la evidencia técnica, incluida su verificación en vivo; el criterio 6 verifica aporte individual y comunicación.
 

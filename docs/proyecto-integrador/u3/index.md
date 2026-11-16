@@ -21,9 +21,6 @@ Este producto evidencia que el equipo no solo construyó una aplicación funcion
 | LP2 | Base Full-Stack modular de BomERP: una SPA, una aplicación Spring Boot única (módulos verificados con Spring Modulith) y una base Oracle por esquemas funcionales, optimizadas, monitoreadas y estabilizadas. | [Producto LP2 U3](lp2-producto.md) |
 | Integrado | Evidencia final de trazabilidad, operación, pruebas y sustentación. | [Checklist final](checklist-final.md) |
 
-Implementación de las sesiones S13 y S14 para el sistema odontológico de este
-workspace: [Evidencias S13/S14 de ClinicaDent](clinicadent-s13-s14.md).
-
 ## Integración esperada
 
 ```mermaid
