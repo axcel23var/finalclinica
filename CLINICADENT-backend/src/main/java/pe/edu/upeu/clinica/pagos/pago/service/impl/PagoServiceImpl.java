@@ -90,6 +90,7 @@ public class PagoServiceImpl implements PagoService {
         Pago pago = Pago.builder()
             .idTratamiento(request.getDistribuciones().get(0).getIdTratamiento())
             .montoTotal(BigDecimal.ZERO)
+            .estado(request.getEstado())
             .build();
 
         for (DistribucionPagoRequest distribucionRequest : request.getDistribuciones()) {
@@ -154,7 +155,7 @@ public class PagoServiceImpl implements PagoService {
                 .toList();
         boolean todosPagados = idsTratamientos.stream()
             .allMatch(id -> tratamientoSaldoPort.obtenerSaldoPendiente(id).compareTo(BigDecimal.ZERO) == 0);
-        response.setEstado(todosPagados ? ESTADO_PAGADO : ESTADO_PENDIENTE);
+        response.setEstado(pago.getEstado() != null ? pago.getEstado() : (todosPagados ? ESTADO_PAGADO : ESTADO_PENDIENTE));
         return response;
     }
 

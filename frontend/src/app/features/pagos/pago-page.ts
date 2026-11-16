@@ -37,6 +37,7 @@ export class PagoPage implements OnInit {
   protected readonly pagoSeleccionado = signal<number | null>(null);
   protected readonly form = this.fb.nonNullable.group({
     idTratamiento: ['', Validators.required],
+    estado: ['PENDIENTE'],
     montoTratamiento: [0, [Validators.required, Validators.min(0.01)]],
     idMetodoPago: ['', Validators.required],
     montoAbono: [0, [Validators.required, Validators.min(0.01)]],
@@ -90,6 +91,7 @@ export class PagoPage implements OnInit {
     }
     this.saving.set(true);
     this.api.registrarPago({
+      estado: this.form.controls.estado.value,
       distribuciones: this.distribucionesAbono().map(({ idTratamiento, montoAplicado }) => ({
         idTratamiento,
         montoAplicado,

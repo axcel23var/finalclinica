@@ -16,6 +16,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PagoRequest {
+    
+    private String estado;
 
     @NotEmpty(message = "Distribuye el abono entre uno o más tratamientos")
     @Valid

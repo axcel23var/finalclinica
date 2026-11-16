@@ -43,6 +43,8 @@ public class Pago {
     @Column(name = "MONTO_TOTAL", nullable = false, precision = 10, scale = 2)
     private BigDecimal montoTotal;
 
+    private String estado;
+
     @Builder.Default
     @OneToMany(mappedBy = "pago", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DetallePago> detalles = new ArrayList<>();

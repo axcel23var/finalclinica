@@ -7,8 +7,9 @@
     <form class="transaction-layout" [formGroup]="form" (ngSubmit)="guardar()" novalidate>
       <div class="transaction-main">
         <section class="transaction-section"><div class="transaction-section-title"><span>1</span><div><h3>Distribución entre tratamientos</h3><p>Un recibo puede cubrir varios planes</p></div></div>
-          <div class="detail-entry-grid">
-            <div class="field"><label for="pago-tratamiento">Plan de tratamiento *</label><select id="pago-tratamiento" formControlName="idTratamiento" (change)="onTratamientoChange($event)"><option value="" disabled>Selecciona un plan con saldo</option>@for (item of tratamientos(); track item.id) { @if (item.saldoPendiente > 0) { <option [value]="item.id">Plan #{{ item.id }} · Paciente #{{ item.idPaciente }} · Saldo S/ {{ item.saldoPendiente | number:'1.2-2' }}</option> } }</select></div>
+          <div class="detail-entry-gridpayment-entry-grid">
+            <div class="field"><label for="pago-tratamiento">Plan de tratamiento *</label><select id="pago-tratamiento" formControlName="idTratamiento" (change)="onTratamientoChange($event)"><option value="" disabled>Selecciona un plan con saldo</option>@for (item of tratamientos(); track item.id) { @if (item.saldoPendiente > 0) { <option [value]="item.id">Plan #{{ item.id }} · Paciente #{{ item.idPaciente }} · Saldo S/ {{ item.saldoPendiente | number:'1.2-2' }}</option> } }</select> </div>
+            <div class="field"><label for="estado">Estado *</label><select id="estado" formControlName="estado"><option value="PENDIENTE">Pendiente</option><option value="CONFIRMADO">Confirmado</option><option value="ANULADO">Anulado</option></select></div>
             <div class="field"><label for="monto-tratamiento">Monto aplicado (S/) *</label><input id="monto-tratamiento" type="number" min="0.01" step="0.01" formControlName="montoTratamiento" /></div>
             <button class="button-secondary" type="button" (click)="agregarTratamientoAbono()">Añadir tratamiento</button>
           </div>

@@ -288,6 +288,7 @@ export class ClinicApiService {
   }
 
   registrarPago(request: {
+    estado?: string;
     distribuciones: { idTratamiento: number; montoAplicado: number }[];
     detalles: { idMetodoPago: number; montoAbonado: number; numeroOperacion?: string }[];
   }): Observable<Pago> {
