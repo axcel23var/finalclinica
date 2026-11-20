@@ -247,8 +247,8 @@ Se validaron las cuatro operaciones básicas sobre `PACIENTES` (ej. paciente de 
 - `DELETE` / `ROLLBACK TO`: eliminación controlada confirmando conteo `0`.
 
 ### 4.4. Evidencias
-> **`[PEGAR AQUÍ CAPTURA: Inventario de 15 tablas, 15 PKs y 10 FKs en SQL Developer]`**  
-> **`[PEGAR AQUÍ CAPTURA: Resultado de actualización y eliminación en PACIENTES]`**
+![alt text](image-1.png)
+![alt text](image-2.png)
 
 ---
 
@@ -365,7 +365,7 @@ END;
 ```
 
 > **Evidencia obligatoria:**  
-> **`[PEGAR AQUÍ CAPTURA: Salida de Script mostrando compilación de REGISTRAR_CITA_BD2, CONTAR_CITAS_BD2, TRG_AUDITAR_CITA_BD2, ejecución del bloque y del cursor c_citas_bd2]`**
+![alt text](image-3.png)
 
 ---
 
@@ -394,14 +394,16 @@ FROM DBA_DATA_FILES
 WHERE TABLESPACE_NAME = 'TS_CLINICADENT_BD2';
 ```
 
-> **`[PEGAR AQUÍ CAPTURA: Consulta de DBA_DATA_FILES para TS_CLINICADENT_BD2]`**
+![alt text](image-4.png)
+![alt text](image-5.png)
 
 ### Monitoreo y diagnóstico operativo (Sesiones, Bloqueos y Rendimiento)
 - **Bloqueos de fila (`V$SESSION`):** Se simuló una transacción sin confirmar (`UPDATE` en sesión `52`) mientras una segunda sesión (`57`) intentaba modificar la misma fila, observando espera `enq: TX - row lock contention` (`Transaction` en `DBA_WAITERS`/`DBA_BLOCKERS`) y su liberación inmediata tras ejecutar `ROLLBACK` en la sesión `52`.
 - **Integridad y caché:** `DBA_OBJECTS` reportó `0` objetos inválidos en `CLINICADENT_BD2` y `V$SYSSTAT` registró un ratio de acierto de caché de `99,16 %`.
 - **Plan de consulta:** La búsqueda en `PACIENTES.DNI` utilizó `INDEX UNIQUE SCAN` + `TABLE ACCESS BY INDEX ROWID`.
 
-> **`[PEGAR AQUÍ CAPTURA: Identificación del bloqueo de sesión (57 vs 52) y planes de ejecución]`**
+![alt text](image-6.png)
+![alt text](image-7.png)
 
 ---
 
@@ -435,7 +437,8 @@ PARTITION BY RANGE (FECHA_CREACION) (
 Insertando fechas de prueba (`2026-12-31`, `2027-01-01` y `2028-01-01`) y consultando `USER_TAB_PARTITIONS` y `EXPLAIN PLAN` para el intervalo 2027, Oracle mostró **`PARTITION RANGE SINGLE`**, confirmando que solo accede a la partición `P_2027` (*Partition Pruning*).
 
 > **Evidencia obligatoria:**  
-> **`[PEGAR AQUÍ CAPTURA: USER_TAB_PARTITIONS, distribución de las 3 fechas y EXPLAIN PLAN con PARTITION RANGE SINGLE]`**
+![alt text](image-8.png)
+![alt text](image-9.png)
 
 ---
 
@@ -476,12 +479,16 @@ SELECT 'IMPORTADO' AS ORIGEN, ID, DNI, NOMBRES, APELLIDOS FROM PACIENTES_RECUP_B
 ```
 
 > **Evidencia obligatoria:**  
-> **`[PEGAR AQUÍ CAPTURA: Salida de EXPDP/IMPDP y consulta UNION ALL comparando ORIGINAL vs IMPORTADO]`**
+![alt text](image-10.png)
+![alt text](image-11.png)
+![alt text](image-12.png)
+![alt text](image-13.png)
 
 ### Evidencia adicional: Respaldo físico y validación con RMAN
 Como práctica complementaria de resiliencia, dado que la instancia `FREE` opera en `NOARCHIVELOG`, se realizó un cierre consistente (`SHUTDOWN IMMEDIATE`), montaje (`STARTUP MOUNT`) y respaldo físico completo con etiqueta **`BD2_FRIO`**, validando los 5 backup sets generados (`VALIDATE BACKUPSET 1..5`) y comprobando la reapertura de `FREEPDB1` en modo `READ WRITE`.
 
-> **`[PEGAR AQUÍ CAPTURA: Finalización de BACKUP DATABASE BD2_FRIO y VALIDATE BACKUPSET]`**
+![alt text](image-14.png)
+![alt text](image-15.png)
 
 ---
 
